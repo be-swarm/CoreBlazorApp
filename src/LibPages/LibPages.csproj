@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\BeSwarmWebApiClient.csproj" />
+    <ProjectReference Include="..\CoreBlazorApp\CoreBlazorApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\App.Designer.cs">
+      <DependentUpon>App.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\App.resx">
+      <LastGenOutput>App.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+
+</Project>

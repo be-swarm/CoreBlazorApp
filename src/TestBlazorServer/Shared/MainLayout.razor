@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager UrlHelper;
+@inject IJSRuntime JSRuntime;
+
+@using Microsoft.AspNetCore.WebUtilities;
+<PageTitle>TestBlazorServer</PageTitle>
+
+<div class="page">
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+
+	<main>
+		
+		@if (Session.IsBusy)
+		{ 
+		}
+		else
+		{
+			
+			<article class="content px-4">
+				@Body
+			</article>
+		}
+	</main>
+</div>

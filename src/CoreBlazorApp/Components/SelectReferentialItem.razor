@@ -1,0 +1,16 @@
+﻿@namespace BeSwarm.CoreBlazorApp.Components
+@using BeSwarm.WebApiClient.Models
+<MudSelect T="ReferentialItemLang" @bind-Value="@Value" Label="@Caption" Variant="Variant.Outlined" SelectedValuesChanged="OnSelectedValuesChanged">
+	@foreach (var item in Items)
+	{
+		<MudSelectItem T="ReferentialItemLang" Value="item">
+			
+				@if (!string.IsNullOrEmpty(item.Thumbnail))
+			{
+				<img width="60" height="35" src="data:image/png;base64,@item.Thumbnail">
+			}
+			<label>@item.Description</Label>
+			
+		</MudSelectItem>
+	}
+</MudSelect>

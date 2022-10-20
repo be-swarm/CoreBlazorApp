@@ -1,7 +1,7 @@
 # NAME
 
-[![NuGet](https://img.shields.io/nuget/v/DataAnnotationValidator.svg)](https://www.nuget.org/packages/DataAnnotationValidator/)
-[![NuGet](https://img.shields.io/nuget/dt/DataAnnotationValidator.svg)](https://www.nuget.org/packages/DataAnnotationValidator/)
+[![NuGet](https://img.shields.io/nuget/v/BeSwarm.CoreBlazorApp.svg)](https://www.nuget.org/packages/BeSwarm.CoreBlazorApp/)
+[![NuGet](https://img.shields.io/nuget/dt/BeSwarm.CoreBlazorApp.svg)](https://www.nuget.org/packages/BeSwarm.CoreBlazorApp/)
 
 
 Description

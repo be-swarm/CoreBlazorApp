@@ -1,0 +1,17 @@
+﻿@namespace BeSwarm.CoreBlazorApp.Components
+
+<MudMessageBox @ref="mbox" >
+    <TitleContent>
+        <div>
+            <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" />@Caption
+        </div>
+
+    </TitleContent>
+    <MessageContent>
+        @Message
+    </MessageContent>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.CheckCircle">@OKCaption</MudButton>
+    </YesButton>
+
+</MudMessageBox>

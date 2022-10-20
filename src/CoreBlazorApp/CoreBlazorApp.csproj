@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <RootNamespace>BeSwarm.CoreBlazorApp</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.0.0-rc1</Version>
+    <PackageId>BeSwarm.CoreBlazorApp</PackageId>
+    <Title>CoreBlazorApp</Title>
+    <PackageTags>Blazor,BeSwarm,WebApi</PackageTags>
+    <Description>  </Description>
+    <RepositoryUrl>https://github.com/be-swarm/CoreBlazorApp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/be-swarm/CoreBlazorApp</PackageProjectUrl>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+
+
+
+    <Authors>Be Swarm</Authors>
+    <Company>Be Swarm</Company>
+    <Copyright>Be Swarm</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <RepositoryType>git</RepositoryType>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BeSwarm.Validator" Version="1.0.0-rc1" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="IdentityModel.OidcClient" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
+    <PackageReference Include="MudBlazor" Version="6.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\BeSwarmWebApiClient.csproj" />
+  </ItemGroup>
+
+
+</Project>

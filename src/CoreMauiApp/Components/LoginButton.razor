@@ -1,0 +1,13 @@
+﻿@namespace Beswarm.coremauiap
+<div style="height:42px;">
+   
+    @if (!Session.SessionWebApi.SessionIsActive)
+    {
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Login">Login</MudButton>
+	}
+    else
+    {
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Logout">Logout</MudButton>
+    }
+ 
+</div>

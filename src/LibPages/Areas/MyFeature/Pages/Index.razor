@@ -1,0 +1,69 @@
+﻿@page "/"
+
+@using LibPages.Resources;
+@using Microsoft.Extensions.Localization;
+@using BeSwarm.CoreBlazorApp.Components
+@inject ConfirmDialogService confirmservice;
+@namespace LibPages.Areas.MyFeature.Pages
+
+
+<PageTitle>Index</PageTitle>
+<LoginButton></LoginButton>
+@if (Session.SessionWebApi.SessionIsActive)
+{
+	<label>Logged</label>
+}
+else
+{
+	<label> Not Logged</label>
+}
+<SelectLang></SelectLang>
+
+<EditForm Model="@model" OnValidSubmit="@SubmitValidForm">
+	<BeSwarm.Validator.BlazorValidator ValidateContext="_validatorContext" />
+	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.Name" Label="@_rm.GetString("Name")" ValidateProperty="@(()=>model.Name)" />
+	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.FirstName" Label="@_rm.GetString("FirstName")" ValidateProperty="@(()=>model.FirstName)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputInteger @bind-Value="@model.Age" Label="Age" ValidateProperty="@(()=>model.Age)" />
+	<BeSwarm.CoreBlazorApp.Components.InputSliderInteger @bind-Value="@model.Age" Label="Age" ValidateProperty="@(()=>model.Age)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" />
+	<BeSwarm.CoreBlazorApp.Components.InputSliderDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" ValidateStrict="true" />
+
+
+	
+
+	<BeSwarm.CoreBlazorApp.Components.Button Caption="click" @onclick="@(()=>counter++)" />@counter
+
+	@*
+
+	<BeSwarm.CoreBlazorApp.Components.InputInteger @bind-Value="@model.Age" />
+	<ValidationMessage For="@(() => model.Age)" />
+	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" />
+	<ValidationMessage For="@(() => model.Weight)" />
+	*@
+</EditForm>
+
+<label>@DateTime.Now</label>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowError">Show error</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowDialog" >Open Dialog</MudButton>@status
+
+<MudChip Variant="Variant.Outlined" Color="Color.Info"><SetDarkTheme />Dark theme</MudChip>
+
+@code
+{
+	int counter = 0;
+	string status = "";
+
+	async Task ShowDialog()
+	{
+		await confirmservice.Show("Question", "Delete items", "YES", "NO", OnYes, OnNo);
+	}
+	async Task OnYes()
+	{
+		status = "YES";
+	}
+	async Task OnNo()
+	{
+		status = "NO";
+	}
+
+}
