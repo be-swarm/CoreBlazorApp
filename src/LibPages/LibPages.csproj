@@ -9,7 +9,6 @@
 
  
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\BeSwarmWebApiClient.csproj" />
     <ProjectReference Include="..\CoreBlazorApp\CoreBlazorApp.csproj" />
   </ItemGroup>
 

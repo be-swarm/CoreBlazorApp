@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMauiBlazor", "..\TestMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBlazorApp", "CoreBlazorApp.csproj", "{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeSwarmWebApiClient", "..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\BeSwarmWebApiClient.csproj", "{4CC516BB-2F2A-4E6C-8A67-A11A42D428A9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPages", "..\LibPages\LibPages.csproj", "{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorWASM", "..\TestBlazorWASM\TestBlazorWASM.csproj", "{D4BEF1C8-D7DE-4385-885A-CF270EC048E9}"
@@ -31,10 +29,6 @@ Global
 		{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CC516BB-2F2A-4E6C-8A67-A11A42D428A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CC516BB-2F2A-4E6C-8A67-A11A42D428A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CC516BB-2F2A-4E6C-8A67-A11A42D428A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CC516BB-2F2A-4E6C-8A67-A11A42D428A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="BeSwarm.Validator" Version="1.0.0-rc1" />
+    <PackageReference Include="BeSwarm.WebApiClient" Version="1.0.0-rc1" />
     <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
@@ -55,10 +56,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\BeSwarmWebApiClient.csproj" />
   </ItemGroup>
 
 
