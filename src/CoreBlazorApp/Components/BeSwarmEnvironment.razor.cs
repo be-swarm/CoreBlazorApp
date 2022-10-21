@@ -41,7 +41,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 		[Parameter] public RenderFragment ChildContent { get; set; } = default!;
 		[Parameter] public Platforms Platform { get; set; } = default!;
 		[Inject] public SessionWebApi SessionWebApi { get; private set; } = default!;
-		[Inject] private ISessionStorageService LocalStorageService { get; set; } = default!;
+		[Inject] private ISessionPersistence Persistence { get; set; } = default!;
 		[Inject] private NavigationManager NavigationManager { get; set; } = default!;
 		[Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 		[Inject] private IThemeService ThemeService { get; set; } = default!;
@@ -53,10 +53,9 @@ namespace BeSwarm.CoreBlazorApp.Components
 		public bool IsBusy { get; private set; } = true;
 		private SessionConfiguration Configuration { get; set; } = new SessionConfiguration();
 		public event Action<ChangeEvents> EnvironmentHasChanged = default!;
-		private bool restaured = false;
-		protected override async Task OnAfterRenderAsync(bool FirstTime)
+	    protected override async Task OnAfterRenderAsync(bool FirstTime)
 		{
-			// assertp platform is set
+			// assert platform is set
 			if (Enum.IsDefined(typeof(Platforms), Platform) == false)
 			{
 				throw new Exception("Platform is not set usage ex: <BeSwarmEnvironment Platform=@Platforms.Maui> or <BeSwarmEnvironment platform=@Platforms.BlazorServer> or <BeSwarmEnvironment platform=@Platforms.BlazorWasm>");
@@ -122,7 +121,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 		{
 			if (Platform == Platforms.Maui) return; // only blazor app need save state
 			Configuration.SessionWebApi = SessionWebApi.SerializeCurrentSession();
-			await LocalStorageService.SetItemAsStringAsync("SessionBeSwarm", JsonConvert.SerializeObject(Configuration));
+			await Persistence.Save("SessionBeSwarm", JsonConvert.SerializeObject(Configuration));
 
 		}
 		//
@@ -130,11 +129,9 @@ namespace BeSwarm.CoreBlazorApp.Components
 		//
 		public async Task RestoreConfiguration()
 		{
-			if (Platform == Platforms.BlazorWasm) restaured = false;  // always restore
-			if (!restaured && Platform == Platforms.BlazorServer || Platform == Platforms.BlazorWasm)  // only blazor app need restore state
+			if (Platform == Platforms.BlazorServer || Platform == Platforms.BlazorWasm)  // only blazor app need restore state
 			{
-				restaured = true;
-				var json = await LocalStorageService.GetItemAsStringAsync("SessionBeSwarm");
+				var json = await Persistence.Get("SessionBeSwarm");
 				if (!string.IsNullOrEmpty(json))
 				{
 					var res = JsonConvert.DeserializeObject<SessionConfiguration>(json);
@@ -155,10 +152,13 @@ namespace BeSwarm.CoreBlazorApp.Components
 			// important restore session to retrieve statecode
 			await RestoreConfiguration();
 			var result = await SessionWebApi.GetUserTokens(uri);
-			// save session
-			await SaveConfiguration();
+			if (result.IsOk)
+			{
+				// save session
+				await SaveConfiguration();
+				NavigationManager.NavigateTo(Configuration.RouteAfterLogin);
+			}
 			NotifyStateChanged(ChangeEvents.Login);
-			NavigationManager.NavigateTo(Configuration.RouteAfterLogin);
 			return result;
 		}
 		public async Task<ResultAction> CreateWebApiSession(Dictionary<string, string> keys)

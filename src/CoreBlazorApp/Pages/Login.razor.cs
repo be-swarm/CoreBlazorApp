@@ -9,6 +9,7 @@ public partial class Login
 {
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 	[Inject] NavigationManager NavigationManager { get; set; } = default!;
+	private string err = "";
 	protected override async Task OnAfterRenderAsync(bool FirstTime)
 	{
 
@@ -19,7 +20,11 @@ public partial class Login
 			// return of oauth ?
 			if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var param))
 			{
-				await Session.CreateWebApiSession(NavigationManager.Uri);
+				var result =await Session.CreateWebApiSession(NavigationManager.Uri);
+				if (!result.IsOk)
+				{
+					err = result.Error.Description;
+				}
 			}
 
 		}

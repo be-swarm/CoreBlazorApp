@@ -37,6 +37,9 @@ ConfigOauth.Serviceentrypoint = "https://dev.user.BeSwarm.net";
 builder.Services.AddCoreBlazorApp();
 // inject blazor specific login service
 builder.Services.AddScoped<ILoginBeSwarmService, BlazorLoginBeSwarmService>();
+//builder.Services.AddScoped<ISessionPersistence,SessionPersistenceToSessionWeb>();
+builder.Services.AddScoped<ISessionPersistence, SessionPersistenceToLocalWeb>();
+
 
 
 
