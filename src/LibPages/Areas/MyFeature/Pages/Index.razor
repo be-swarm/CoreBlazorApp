@@ -28,8 +28,11 @@ else
 	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" />
 	<BeSwarm.CoreBlazorApp.Components.InputSliderDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" ValidateStrict="true" />
 
+	<BeSwarm.CoreBlazorApp.Components.InputDate @bind-Value="@model.Date" Label="Date" ValidateProperty="@(()=>model.Date)"  />
 
-	
+	<BeSwarm.CoreBlazorApp.Components.InputTime @bind-Value="@model.Date" Label="Time" ValidateProperty="@(()=>model.Date)" />
+		
+	<Label>@model.Date.ToString() </Label>
 
 	<BeSwarm.CoreBlazorApp.Components.Button Caption="click" @onclick="@(()=>counter++)" />@counter
 

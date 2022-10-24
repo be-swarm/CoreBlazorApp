@@ -12,9 +12,17 @@ namespace LibPages.Models
 		public string FirstName { get; set; } = default!;
 
 		[Range(1, 99)]
-		public int Age { get; set; } = default!;
+		public int Age { get; set; } =default!;
 
 		[Range(50, 200)]
 		public Decimal Weight { get; set; } = default!;
+
+		public DateTimeOffset Date { get; set; } = default!;
+
+		public Test()
+		{
+
+		}
+
 	}
 }

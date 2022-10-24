@@ -11,7 +11,7 @@ namespace LibPages.Areas.MyFeature.Pages;
 
 public partial class Index : IDisposable
 {
-	readonly Test model = new();
+	 Test model = new();
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 	[Inject] ErrorDialogService ErrorDialogService { get; set; } = default!;
 	private readonly System.Resources.ResourceManager _rm = new("LibPages.Resources.App", System.Reflection.Assembly.GetExecutingAssembly());
@@ -22,13 +22,17 @@ public partial class Index : IDisposable
 		if (FirstTime)
 		{
 			Session.EnvironmentHasChanged += async (ChangeEvents e) => await Refresh(e);
+			await Refresh(0);
 		}
+		
 		CultureInfo.CurrentUICulture = new CultureInfo(Session.Lang);
 		CultureInfo.CurrentCulture = new CultureInfo(Session.Lang);
 		await base.OnAfterRenderAsync(FirstTime);
 	}
 	private async Task Refresh(ChangeEvents e)
 	{
+		model.Date = DateTime.Now;
+		model.Age = 67;
 		if (e != ChangeEvents.DarkMode) StateHasChanged();
 	}
 	private void SubmitValidForm()

@@ -71,7 +71,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 				IsBusy = false;
 				if (Platform == Platforms.BlazorWasm) await SetLang(Configuration.Lang);
 				NotifyStateChanged(ChangeEvents.Init);
-
+			
 			}
 
 		}
@@ -203,7 +203,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 		async ValueTask IAsyncDisposable.DisposeAsync()
 		{
 			if (_module != null)
-			{
+			{   
 				var module = await _module;
 				await module.DisposeAsync();
 			}

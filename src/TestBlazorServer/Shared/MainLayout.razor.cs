@@ -2,9 +2,8 @@
 
 using Microsoft.AspNetCore.Components;
 
-namespace TestBlazorServer.Shared
-{
-	public partial class MainLayout : IDisposable
+namespace TestBlazorServer.Shared;
+public partial class MainLayout : IDisposable
 	{
 		[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 
@@ -25,4 +24,3 @@ namespace TestBlazorServer.Shared
 			Session.EnvironmentHasChanged -= async (ChangeEvents e) => await Refresh(e);
 		}
 	}
-}
