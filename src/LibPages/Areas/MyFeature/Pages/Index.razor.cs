@@ -1,17 +1,21 @@
 ﻿using BeSwarm.CoreBlazorApp.Components;
 using BeSwarm.Validator;
+using BeSwarm.WebApiClient.Models;
+using BeSwarm.WebApiClient.Referentials;
 
 using LibPages.Models;
 
 using Microsoft.AspNetCore.Components;
 
 using System.Globalization;
+using BeSwarm.WebApiClient;
 
 namespace LibPages.Areas.MyFeature.Pages;
 
 public partial class Index : IDisposable
 {
 	 Test model = new();
+	 string status = "";
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 	[Inject] ErrorDialogService ErrorDialogService { get; set; } = default!;
 	private readonly System.Resources.ResourceManager _rm = new("LibPages.Resources.App", System.Reflection.Assembly.GetExecutingAssembly());
@@ -43,7 +47,34 @@ public partial class Index : IDisposable
 	{
 		await ErrorDialogService.Show("error", "This is an error message");
 	}
+	async Task ShowDialog()
+	{
+		await confirmservice.Show("Question", "Delete items", "YES", "NO", OnYes, OnNo);
+	}
+	private async Task OnYes()
+	{
+		status = "YES";
+	}
+	private async Task OnNo()
+	{
+		status = "NO";
+	}
 
+	private async Task CallSomeWebApi()
+	{
+		var httpclient = Session.GetUserHttpClient();
+		BeSwarm.WebApiClient.Referentials.Referentials refs = new("", httpclient);
+		try
+		{
+			BeSwarm.WebApiClient.Referentials.ReferentialItemListResultAction result = await refs.GetReferentialListAsync(Session.UserToken, "diets");
+		}
+		catch (Exception e)
+		{
+			// show error if needed
+			ResultAction err = Session.GetInternalErrorFromException(e);
+		}
+
+	}
 
 	void IDisposable.Dispose()
 	{

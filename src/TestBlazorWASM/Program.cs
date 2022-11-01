@@ -31,19 +31,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 	options.SupportedUICultures = supportedCultures;
 });
 
-//
-// Configure oauth and add CoreBlazorApp
-//
-//ConfigOauth.userswarm = "testdev";
-ConfigOauth.ClientSecret = "MySecret";
-ConfigOauth.Applicationid = "fc824c2d-5ce9-4f81-8199-4b76186d474d.28ea0ff0-6bdf-4d73-ac8d-063ecbebf9a0.testdev";
-ConfigOauth.Serviceentrypoint = "https://dev.user.BeSwarm.net";
 builder.Services.AddCoreBlazorApp();
 // inject blazor specific login service
 builder.Services.AddScoped<ILoginBeSwarmService, BlazorLoginBeSwarmService>();
 //builder.Services.AddScoped<ISessionPersistence,SessionPersistenceToSessionWeb>();
 builder.Services.AddScoped<ISessionPersistence, SessionPersistenceToLocalWeb>();
-
-
+builder.Services.AddSingleton<ISecureConfig, SecureConfig>();
 
 await builder.Build().RunAsync();

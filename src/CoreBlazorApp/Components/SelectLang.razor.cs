@@ -21,9 +21,9 @@ public partial class SelectLang : IDisposable
     }
     private async Task OnRefresh(ChangeEvents e)
     {
-        //if (e == ChangeEvents.Login || e == ChangeEvents.Lang||e==ChangeEvents.Init)  // reload langs
+        if (e == ChangeEvents.Login || e == ChangeEvents.Lang || e == ChangeEvents.Init)  // reload langs
         {
-            var res = await Session.SessionWebApi.GetReferentialItems("langs", Session.Lang);
+            var res = await Session.GetReferentialItems("langs", Session.Lang);
             langs = res.Datas;
             if (res.IsError)
             {   // show error if needed
@@ -34,6 +34,8 @@ public partial class SelectLang : IDisposable
 
         }
     }
+
+   
     void IDisposable.Dispose()
     {
         Session.EnvironmentHasChanged -= async (ChangeEvents e) => await OnRefresh(e);

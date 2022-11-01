@@ -8,6 +8,7 @@ namespace BeSwarm.CoreBlazorApp.Pages;
 public partial class Login
 {
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
+	[Inject] ErrorDialogService ErrorDialogService { get; set; } = default!;
 	[Inject] NavigationManager NavigationManager { get; set; } = default!;
 	private string err = "";
 	protected override async Task OnAfterRenderAsync(bool FirstTime)

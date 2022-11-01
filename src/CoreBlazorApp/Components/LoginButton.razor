@@ -1,7 +1,7 @@
 ﻿@namespace BeSwarm.CoreBlazorApp.Components
-<div style="height:42px;">
+<div style="height:50px;">
    
-    @if (!Session.SessionWebApi.SessionIsActive)
+    @if (!Session.SessionIsActive)
     {
         <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Login">Login</MudButton>
 	}

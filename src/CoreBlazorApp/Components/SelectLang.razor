@@ -1,5 +1,5 @@
 ﻿@namespace BeSwarm.CoreBlazorApp.Components
-@if(Session.SessionWebApi.SessionIsActive)
+@if(Session.SessionIsActive)
 {
 <SelectReferentialItem @ref="@refme" Items="@langs" @bind-Value="@selected" Caption="Lang" SelectChanged="OnSelectedLangChanged"></SelectReferentialItem>
 }

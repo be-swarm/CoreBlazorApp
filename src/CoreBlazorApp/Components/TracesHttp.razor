@@ -1,0 +1,34 @@
+﻿@namespace BeSwarm.CoreBlazorApp.Components
+@using System.Net;
+<div>
+
+	<br>
+
+	@{
+		int deb = 0;
+		for (int i = deb; i < Int32.Min(10, Session.TracesHttp.GetTraces().Result.Count); i++)
+		{
+			var item = Session.TracesHttp.GetTraces().Result[i];
+			
+			<MudStack Row="true">
+				<MudPaper Class="pa-3">@item.Date.ToLocalTime().ToString("HH:mm:ss")</MudPaper>
+				@if (item.Status == HttpStatusCode.OK)
+				{
+					<MudBadge Overlap="true" Color="Color.Success" Bordered="true" Content="@item.Status.ToString()">
+						<MudPaper Class="pa-3">@item.Method</MudPaper>
+					</MudBadge>
+				}
+				else
+				{
+					<MudBadge Overlap="true" Color="Color.Error" Bordered="true" Content="@item.Status.ToString()">
+						<MudPaper Class="pa-3">@item.Method</MudPaper>
+					</MudBadge>
+
+				}
+				<MudPaper Class="pa-3">@item.Uri</MudPaper>
+
+
+			</MudStack>
+		}
+	}
+</div>

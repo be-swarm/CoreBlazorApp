@@ -4,19 +4,13 @@
 @using Microsoft.Extensions.Localization;
 @using BeSwarm.CoreBlazorApp.Components
 @inject ConfirmDialogService confirmservice;
+@inject NavigationManager NavigationManager;
 @namespace LibPages.Areas.MyFeature.Pages
 
 
 <PageTitle>Index</PageTitle>
 <LoginButton></LoginButton>
-@if (Session.SessionWebApi.SessionIsActive)
-{
-	<label>Logged</label>
-}
-else
-{
-	<label> Not Logged</label>
-}
+
 <SelectLang></SelectLang>
 
 <EditForm Model="@model" OnValidSubmit="@SubmitValidForm">
@@ -32,9 +26,9 @@ else
 
 	<BeSwarm.CoreBlazorApp.Components.InputTime @bind-Value="@model.Date" Label="Time" ValidateProperty="@(()=>model.Date)" />
 		
-	<Label>@model.Date.ToString() </Label>
+	<label>@model.Date.ToString() </label>
 
-	<BeSwarm.CoreBlazorApp.Components.Button Caption="click" @onclick="@(()=>counter++)" />@counter
+	
 
 	@*
 
@@ -48,25 +42,9 @@ else
 <label>@DateTime.Now</label>
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowError">Show error</MudButton>
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowDialog" >Open Dialog</MudButton>@status
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CallSomeWebApi">Call WebApi</MudButton>@status
 
+@status
 <MudChip Variant="Variant.Outlined" Color="Color.Info"><SetDarkTheme />Dark theme</MudChip>
+<BeSwarm.CoreBlazorApp.Components.TracesHttp></BeSwarm.CoreBlazorApp.Components.TracesHttp>
 
-@code
-{
-	int counter = 0;
-	string status = "";
-
-	async Task ShowDialog()
-	{
-		await confirmservice.Show("Question", "Delete items", "YES", "NO", OnYes, OnNo);
-	}
-	async Task OnYes()
-	{
-		status = "YES";
-	}
-	async Task OnNo()
-	{
-		status = "NO";
-	}
-
-}

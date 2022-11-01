@@ -27,7 +27,7 @@ public partial class InputTime
 			}
 		}
 	}
-	
+	[Parameter] public bool AmPm { get; set; }
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 	[Parameter]
 	public EventCallback<DateTimeOffset> ValueChanged { get; set; }
@@ -41,6 +41,7 @@ public partial class InputTime
 	protected override async Task OnParametersSetAsync()
 	{
 		_time= Value.TimeOfDay;
+		AmPm = Session.AmPm;
 		await base.OnParametersSetAsync();
 	}
 	protected override void OnInitialized()

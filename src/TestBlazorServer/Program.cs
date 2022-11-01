@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Localization;
 
 using System.Globalization;
 
+using TestBlazorServer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,19 +29,12 @@ builder.Services.AddLocalization(option => option.ResourcesPath = "Resources");
 //});
 
 builder.Services.AddControllers();
-//
-// Configure oauth and add CoreBlazorApp
-//
-//ConfigOauth.userswarm = "testdev";
-ConfigOauth.ClientSecret = "MySecret";
-ConfigOauth.Applicationid = "fc824c2d-5ce9-4f81-8199-4b76186d474d.c6f4141b-5085-461e-b4d1-b7aa4e85bbfb.testdev";
-ConfigOauth.Serviceentrypoint = "https://dev.user.BeSwarm.net";
 builder.Services.AddCoreBlazorApp();
 // inject blazor specific login service
 builder.Services.AddScoped<ILoginBeSwarmService, BlazorLoginBeSwarmService>();
 //builder.Services.AddScoped<ISessionPersistence,SessionPersistenceToSessionWeb>();
 builder.Services.AddScoped<ISessionPersistence, SessionPersistenceToLocalWeb>();
-
+builder.Services.AddSingleton<ISecureConfig, SecureConfig>();
 
 
 
