@@ -1,14 +1,12 @@
 ﻿using BeSwarm.CoreBlazorApp.Components;
 using BeSwarm.Validator;
-using BeSwarm.WebApiClient.Models;
-using BeSwarm.WebApiClient.Referentials;
-
+using BeSwarm.WebApi.Models;
 using LibPages.Models;
 
 using Microsoft.AspNetCore.Components;
 
 using System.Globalization;
-using BeSwarm.WebApiClient;
+using LibPages.Resources;
 
 namespace LibPages.Areas.MyFeature.Pages;
 
@@ -19,13 +17,14 @@ public partial class Index : IDisposable
 	[CascadingParameter] BeSwarmEnvironment Session { get; set; } = default!;
 	[Inject] ErrorDialogService ErrorDialogService { get; set; } = default!;
 	private readonly System.Resources.ResourceManager _rm = new("LibPages.Resources.App", System.Reflection.Assembly.GetExecutingAssembly());
-
 	private readonly ValidateContext _validatorContext = new(false);
+	private AppRes app = new();
 	protected override async Task OnAfterRenderAsync(bool FirstTime)
 	{
 		if (FirstTime)
-		{
+		{   
 			Session.EnvironmentHasChanged += async (ChangeEvents e) => await Refresh(e);
+			app.Culture = new CultureInfo(Session.Lang); 
 			await Refresh(0);
 		}
 		
@@ -35,8 +34,11 @@ public partial class Index : IDisposable
 	}
 	private async Task Refresh(ChangeEvents e)
 	{
-		model.Date = DateTime.Now;
-		model.Age = 67;
+		_validatorContext.Culture = new CultureInfo(Session.Lang);
+		if (e == ChangeEvents.Lang)
+		{
+			app.Culture = new CultureInfo(Session.Lang);
+		}
 		if (e != ChangeEvents.DarkMode) StateHasChanged();
 	}
 	private void SubmitValidForm()
@@ -63,17 +65,17 @@ public partial class Index : IDisposable
 	private async Task CallSomeWebApi()
 	{
 		var httpclient = Session.GetUserHttpClient();
-		BeSwarm.WebApiClient.Referentials.Referentials refs = new("", httpclient);
+		BeSwarm.WebApi.Referentials.Referentials refs = new("", httpclient);
 		try
 		{
-			BeSwarm.WebApiClient.Referentials.ReferentialItemListResultAction result = await refs.GetReferentialListAsync(Session.UserToken, "diets");
+			BeSwarm.WebApi.Referentials.ReferentialItemListResultAction result = await refs.GetReferentialListAsync(Session.UserToken, "diets");
 		}
 		catch (Exception e)
 		{
 			// show error if needed
 			ResultAction err = Session.GetInternalErrorFromException(e);
 		}
-
+	
 	}
 
 	void IDisposable.Dispose()

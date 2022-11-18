@@ -1,5 +1,5 @@
 ﻿@namespace BeSwarm.CoreBlazorApp.Components
-@using BeSwarm.WebApiClient.Models
+@using BeSwarm.WebApi.Models
 <MudSelect T="ReferentialItemLang" @bind-Value="@Value" Label="@Caption" Variant="Variant.Outlined" SelectedValuesChanged="OnSelectedValuesChanged">
 	@foreach (var item in Items)
 	{

@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMauiBlazor", "..\TestMauiBlazor\TestMauiBlazor.csproj", "{117A0DF8-C230-43BB-99E1-8A059F390493}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMauiBlazor", "TestMauiBlazor\TestMauiBlazor.csproj", "{117A0DF8-C230-43BB-99E1-8A059F390493}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBlazorApp", "CoreBlazorApp.csproj", "{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBlazorApp", "CoreBlazorApp\CoreBlazorApp.csproj", "{94A918AD-9CB2-400F-9CCF-BE2D3C1C7AD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPages", "..\LibPages\LibPages.csproj", "{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPages", "LibPages\LibPages.csproj", "{DE4BFFB7-9D50-43D3-96BF-CB5970B0C55C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorWASM", "..\TestBlazorWASM\TestBlazorWASM.csproj", "{D4BEF1C8-D7DE-4385-885A-CF270EC048E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorWASM", "TestBlazorWASM\TestBlazorWASM.csproj", "{D4BEF1C8-D7DE-4385-885A-CF270EC048E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorServer", "..\TestBlazorServer\TestBlazorServer.csproj", "{9CE3DAD2-AB8D-4918-9CE9-197A5458B59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorServer", "TestBlazorServer\TestBlazorServer.csproj", "{9CE3DAD2-AB8D-4918-9CE9-197A5458B59C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "beswarmwebapiclient", "..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\beswarmwebapiclient.csproj", "{0CE746C7-954F-4A6C-8555-8C20A9DE6AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeswarmWebapiClient", "BeSwarmWebApiClient\BeswarmWebapiClient.csproj", "{C631C9C3-4966-4653-8C7B-5D537F07364C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +43,10 @@ Global
 		{9CE3DAD2-AB8D-4918-9CE9-197A5458B59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE3DAD2-AB8D-4918-9CE9-197A5458B59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE3DAD2-AB8D-4918-9CE9-197A5458B59C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CE746C7-954F-4A6C-8555-8C20A9DE6AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CE746C7-954F-4A6C-8555-8C20A9DE6AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CE746C7-954F-4A6C-8555-8C20A9DE6AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CE746C7-954F-4A6C-8555-8C20A9DE6AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C631C9C3-4966-4653-8C7B-5D537F07364C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C631C9C3-4966-4653-8C7B-5D537F07364C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C631C9C3-4966-4653-8C7B-5D537F07364C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C631C9C3-4966-4653-8C7B-5D537F07364C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

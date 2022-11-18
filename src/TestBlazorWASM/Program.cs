@@ -1,6 +1,6 @@
 using BeSwarm.CoreBlazorApp;
 using BeSwarm.CoreBlazorApp.Services;
-using BeSwarm.WebApiClient;
+using BeSwarm.WebApi;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Web;
@@ -37,5 +37,6 @@ builder.Services.AddScoped<ILoginBeSwarmService, BlazorLoginBeSwarmService>();
 //builder.Services.AddScoped<ISessionPersistence,SessionPersistenceToSessionWeb>();
 builder.Services.AddScoped<ISessionPersistence, SessionPersistenceToLocalWeb>();
 builder.Services.AddSingleton<ISecureConfig, SecureConfig>();
+builder.Services.AddScoped<ICryptoService, CryptoFromJS>();
 
 await builder.Build().RunAsync();

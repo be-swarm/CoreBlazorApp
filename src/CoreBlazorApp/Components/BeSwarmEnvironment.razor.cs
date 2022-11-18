@@ -1,6 +1,5 @@
 ﻿using BeSwarm.CoreBlazorApp.Services;
-using BeSwarm.WebApiClient;
-using BeSwarm.WebApiClient.Models;
+using BeSwarm.WebApi.Models;
 
 using Blazored.SessionStorage;
 
@@ -12,26 +11,24 @@ using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
 using System.Globalization;
-using BeSwarm.WebApiClient.Services;
+using BeSwarm.WebApi;
+using BeSwarm.WebApi.Services;
+using BeSwarm.WebApi.Services;
 
 namespace BeSwarm.CoreBlazorApp.Components
 {
 
 	public enum ChangeEvents
-	{   Init=1,
+	{
+		Init = 1,
 		Lang = 2,
-        Login=3,
+		Login = 3,
 		Logout = 4,
 		DarkMode = 5,
 		AmPm = 6,
 
 	}
-	public enum Platforms
-	{
-		BlazorServer = 1,
-		BlazorWasm = 2,
-		Maui = 3
-	}
+	
 	public partial class BeSwarmEnvironment : IAsyncDisposable
 	{
 		class SessionConfiguration
@@ -41,17 +38,18 @@ namespace BeSwarm.CoreBlazorApp.Components
 			public bool IsDark { get; set; } = false;
 			public string SessionWebApi { get; set; } = "";
 			public string RouteAfterLogin { get; set; } = "/";   // only for blazor app
+
 		}
 
 		[Parameter] public RenderFragment ChildContent { get; set; } = default!;
-		[Parameter] public Platforms Platform { get; set; } = default!;
 		[Inject] private SessionWebApi SessionWebApi { get; set; } = default!;
 		[Inject] private ISessionPersistence Persistence { get; set; } = default!;
 		[Inject] private NavigationManager NavigationManager { get; set; } = default!;
 		[Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 		[Inject] private IThemeService ThemeService { get; set; } = default!;
-		[Inject] private ILoginBeSwarmService LoginService { get; set; } = default!;
+	    [Inject] private ILoginBeSwarmService LoginService { get; set; } = default!;
 		[Inject] private ISecureConfig SecureConfig { get; set; } = default!;
+		[Inject] private ICryptoService CryptoService { get; set; } = default!;
 
 		[Inject] private ErrorDialogService ErrorDialogService { get; set; } = default!;
 		private Task<IJSObjectReference>? _module;
@@ -64,25 +62,22 @@ namespace BeSwarm.CoreBlazorApp.Components
 		protected override async Task OnAfterRenderAsync(bool FirstTime)
 		{
 			IsBusy = false;
-			// assert platform is set
-			if (Enum.IsDefined(typeof(Platforms), Platform) == false)
-			{
-				throw new Exception("Platform is not set usage ex: <BeSwarmEnvironment Platform=@Platforms.Maui> or <BeSwarmEnvironment platform=@Platforms.BlazorServer> or <BeSwarmEnvironment platform=@Platforms.BlazorWasm>");
-			}
 			if (FirstTime)
 			{
 				IsBusy = true;
 				await RestoreConfiguration();
-				//
 				// init env
 				//
 				ThemeService.SetDarkMode(Configuration.IsDark);
-				if (Platform == Platforms.BlazorWasm) await SetLang(Configuration.Lang);
 				IsBusy = false;
 				NotifyStateChanged(ChangeEvents.Init);
+				NotifyStateChanged(ChangeEvents.Lang);
+				NotifyStateChanged(ChangeEvents.AmPm);
+
 				SessionWebApi.SessionHasChanged += async (SessionWebApiEvents e) => await SessionWebApiHasChanged(e);
 
 			}
+			
 			await base.OnAfterRenderAsync(FirstTime);
 		}
 		//
@@ -100,10 +95,12 @@ namespace BeSwarm.CoreBlazorApp.Components
 			}
 			if (e == SessionWebApiEvents.Logout)  //webapisession has ended session ?
 			{
+				SaveConfiguration();
 				NotifyStateChanged(ChangeEvents.Logout);
 			}
 			if (e == SessionWebApiEvents.Login)  //webapisession has started session ?
 			{
+				await SaveConfiguration();
 				NotifyStateChanged(ChangeEvents.Login);
 			}
 		}
@@ -140,7 +137,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 		{
 			await RestoreConfiguration(); //if not yet restored and before OnAfterRenderAsync
 			Configuration.Lang = codelang;
-			if (codelang=="FR")
+			if (codelang == "FR")
 			{
 				Configuration.AmPm = false;
 			}
@@ -148,9 +145,11 @@ namespace BeSwarm.CoreBlazorApp.Components
 			{
 				Configuration.AmPm = true;
 			}
+			CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(codelang);
+			CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(codelang);
+
 			await SaveConfiguration();
-			SetLang();
-			NotifyStateChanged(ChangeEvents.Lang);
+		    NotifyStateChanged(ChangeEvents.Lang);
 			NotifyStateChanged(ChangeEvents.AmPm);
 		}
 		//
@@ -164,46 +163,26 @@ namespace BeSwarm.CoreBlazorApp.Components
 			await SaveConfiguration();
 			NotifyStateChanged(ChangeEvents.AmPm);
 		}
-		private void SetLang()
-		{
-			if (Platform == Platforms.Maui || Platform == Platforms.BlazorWasm)
-			{
-				CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(Configuration.Lang);
-				CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(Configuration.Lang);
-			}
-			else
-			{
-				var uri = new Uri(NavigationManager.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-				var cultureEscaped = Uri.EscapeDataString(Configuration.Lang);
-				var uriEscaped = Uri.EscapeDataString(uri);
-				NavigationManager.NavigateTo(
-					$"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}",
-					forceLoad: true);
-			}
-		}
 		//
 		// Persist session 
 		//
 		public async Task SaveConfiguration()
 		{
-			if (Platform == Platforms.Maui) return; // only blazor app need save state
 			Configuration.SessionWebApi = SessionWebApi.SerializeCurrentSession();
-			await Persistence.Save("SessionBeSwarm", JsonConvert.SerializeObject(Configuration));
+			await Persistence.Save(SecureConfig.ApplicationId, await CryptoService.Encrypt(JsonConvert.SerializeObject(Configuration)));
 
 		}
+	
 		public async Task RestoreConfiguration()
 		{
-			if (Platform == Platforms.BlazorServer || Platform == Platforms.BlazorWasm)  // only blazor app need restore state
+			var json = await Persistence.Get(SecureConfig.ApplicationId);
+			if (!string.IsNullOrEmpty(json))
 			{
-				var json = await Persistence.Get("SessionBeSwarm");
-				if (!string.IsNullOrEmpty(json))
+				var res = JsonConvert.DeserializeObject<SessionConfiguration>(await CryptoService.Decrypt(json));
+				if (res is { })
 				{
-					var res = JsonConvert.DeserializeObject<SessionConfiguration>(json);
-					if (res is { })
-					{
-						Configuration = res;
-						if (!string.IsNullOrEmpty(Configuration.SessionWebApi)) SessionWebApi.DeserializeCurrentSession(Configuration.SessionWebApi);
-					}
+					Configuration = res;
+					if (!string.IsNullOrEmpty(Configuration.SessionWebApi)) SessionWebApi.DeserializeCurrentSession(Configuration.SessionWebApi);
 				}
 			}
 
@@ -234,7 +213,7 @@ namespace BeSwarm.CoreBlazorApp.Components
 		//
 		public async Task Login(string routeafterlogin = "/")
 		{   // only for blazor app
-			string url = SessionWebApi.GetLoginUrl();
+			string url = SessionWebApi.GetLoginUrl(SecureConfig.CallBackUri);
 			Configuration.RouteAfterLogin = routeafterlogin;
 			// save session
 			await SaveConfiguration();  // important for saving statecode and RouteAfterLogin generated by GetLoginUrl
@@ -247,8 +226,8 @@ namespace BeSwarm.CoreBlazorApp.Components
 		}
 		public async Task Logout()
 		{
-			SessionWebApi.LogOut(); 
-			await SaveConfiguration();  
+			SessionWebApi.LogOut();
+			await SaveConfiguration();
 		}
 
 

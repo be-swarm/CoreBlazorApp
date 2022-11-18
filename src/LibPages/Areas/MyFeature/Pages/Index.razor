@@ -1,8 +1,9 @@
 ﻿@page "/"
 
-@using LibPages.Resources;
+
 @using Microsoft.Extensions.Localization;
 @using BeSwarm.CoreBlazorApp.Components
+@using LibPages.Resources
 @inject ConfirmDialogService confirmservice;
 @inject NavigationManager NavigationManager;
 @namespace LibPages.Areas.MyFeature.Pages
@@ -15,36 +16,22 @@
 
 <EditForm Model="@model" OnValidSubmit="@SubmitValidForm">
 	<BeSwarm.Validator.BlazorValidator ValidateContext="_validatorContext" />
-	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.Name" Label="@_rm.GetString("Name")" ValidateProperty="@(()=>model.Name)" />
-	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.FirstName" Label="@_rm.GetString("FirstName")" ValidateProperty="@(()=>model.FirstName)" ValidateStrict="true" />
-	<BeSwarm.CoreBlazorApp.Components.InputInteger @bind-Value="@model.Age" Label="Age" ValidateProperty="@(()=>model.Age)" />
-	<BeSwarm.CoreBlazorApp.Components.InputSliderInteger @bind-Value="@model.Age" Label="Age" ValidateProperty="@(()=>model.Age)" ValidateStrict="true" />
-	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" />
-	<BeSwarm.CoreBlazorApp.Components.InputSliderDecimal @bind-Value="@model.Weight" Label=@_rm.GetString("Weight") Step="0.5m" ValidateProperty="@(()=>model.Weight)" ValidateStrict="true" />
-
-	<BeSwarm.CoreBlazorApp.Components.InputDate @bind-Value="@model.Date" Label="Date" ValidateProperty="@(()=>model.Date)"  />
-
-	<BeSwarm.CoreBlazorApp.Components.InputTime @bind-Value="@model.Date" Label="Time" ValidateProperty="@(()=>model.Date)" />
-		
-	<label>@model.Date.ToString() </label>
-
+	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.Name" Label=@app.Name() ValidateProperty="@(()=>model.Name)" />
+	<BeSwarm.CoreBlazorApp.Components.InputText @bind-Value="@model.FirstName" Label=@app.FirstName() ValidateProperty="@(()=>model.FirstName)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputInteger @bind-Value="@model.Age" Label=@app.Age() ValidateProperty="@(()=>model.Age)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputSliderInteger @bind-Value="@model.Age" Label=@app.Age() ValidateProperty="@(()=>model.Age)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" Label=@app.Weight() Step="0.5m" ValidateProperty="@(()=>model.Weight)" />
+	<BeSwarm.CoreBlazorApp.Components.InputSliderDecimal @bind-Value="@model.Weight" Label=@app.Weight() Step="0.5m" ValidateProperty="@(()=>model.Weight)" ValidateStrict="true" />
+	<BeSwarm.CoreBlazorApp.Components.InputDate @bind-Value="@model.Date" Label=@app.Date() ValidateProperty="@(()=>model.Date)"  />
+	<BeSwarm.CoreBlazorApp.Components.InputTime @bind-Value="@model.Date" Label=@app.Time() ValidateProperty="@(()=>model.Date)" />
 	
-
-	@*
-
-	<BeSwarm.CoreBlazorApp.Components.InputInteger @bind-Value="@model.Age" />
-	<ValidationMessage For="@(() => model.Age)" />
-	<BeSwarm.CoreBlazorApp.Components.InputDecimal @bind-Value="@model.Weight" />
-	<ValidationMessage For="@(() => model.Weight)" />
-	*@
 </EditForm>
 
-<label>@DateTime.Now</label>
-<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowError">Show error</MudButton>
-<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowDialog" >Open Dialog</MudButton>@status
-<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CallSomeWebApi">Call WebApi</MudButton>@status
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowError">@app.PromptError()</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="ShowDialog" >@app.PromptDialog()</MudButton>@status
+@*<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CallSomeWebApi">Call WebApi</MudButton>@status
+*@
 
-@status
-<MudChip Variant="Variant.Outlined" Color="Color.Info"><SetDarkTheme />Dark theme</MudChip>
+<MudChip Variant="Variant.Outlined" Color="Color.Info"><SetDarkTheme />@app.DarkTheme()</MudChip>
 <BeSwarm.CoreBlazorApp.Components.TracesHttp></BeSwarm.CoreBlazorApp.Components.TracesHttp>
 

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace BeSwarm.CoreBlazorApp.Components;
 
-public partial class InputDate
+public partial class InputDate:IDisposable
 {
 	private DateTimeOffset _value;
 	private DateTime? _date;
@@ -52,12 +52,30 @@ public partial class InputDate
 		}
 
 	}
-
-	void OnDateChange(DateTime? newDate)
+    protected override async Task OnAfterRenderAsync(bool FirstTime)
+    {
+        if (FirstTime)
+        {
+            Session.EnvironmentHasChanged += async (ChangeEvents e) => await OnRefresh(e);
+            await OnRefresh(ChangeEvents.Lang);
+        }
+    }
+    private async Task OnRefresh(ChangeEvents e)
+    {
+        if (e == ChangeEvents.Login || e == ChangeEvents.Lang || e == ChangeEvents.Init)
+        {
+            StateHasChanged();
+        }
+       
+	}
+    void OnDateChange(DateTime? newDate)
 	{
 		_date= newDate;
 		DateTime d = new DateTime(_date.Value.Year, _date.Value.Month, _date.Value.Day, Value.Hour, Value.Minute, 0);
 		Value = new DateTimeOffset((DateTime)d);
 	}
-
+    void IDisposable.Dispose()
+    {
+        Session.EnvironmentHasChanged -= async (ChangeEvents e) => await OnRefresh(e);
+    }
 }

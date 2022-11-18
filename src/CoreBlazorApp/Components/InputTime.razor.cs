@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BeSwarm.CoreBlazorApp.Components;
 
-public partial class InputTime
+public partial class InputTime:IDisposable
 {
 	private DateTimeOffset _value;
 	private TimeSpan? _time;
@@ -57,12 +57,32 @@ public partial class InputTime
 		}
 
 	}
-	void OnTimeChange(TimeSpan? newTime)
+    protected override async Task OnAfterRenderAsync(bool FirstTime)
+    {
+        if (FirstTime)
+        {
+            Session.EnvironmentHasChanged += async (ChangeEvents e) => await OnRefresh(e);
+            await OnRefresh(ChangeEvents.AmPm);
+        }
+    }
+    private async Task OnRefresh(ChangeEvents e)
+    {
+        if (e == ChangeEvents.Login || e == ChangeEvents.AmPm || e == ChangeEvents.Lang || e == ChangeEvents.Init)
+        {
+            AmPm = Session.AmPm;
+            StateHasChanged();
+        }
+    }
+
+    void OnTimeChange(TimeSpan? newTime)
 	{
 		_time = newTime;
 		DateTime d = new DateTime(Value.Date.Year, Value.Date.Month, Value.Date.Day,_time.Value.Hours,_time.Value.Minutes,0);
 		Value = new DateTimeOffset(d);
 	}
-
+    void IDisposable.Dispose()
+    {
+        Session.EnvironmentHasChanged -= async (ChangeEvents e) => await OnRefresh(e);
+    }
 }
 

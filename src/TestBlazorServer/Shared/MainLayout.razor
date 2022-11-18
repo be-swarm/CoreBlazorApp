@@ -3,6 +3,7 @@
 @inject IJSRuntime JSRuntime;
 
 @using Microsoft.AspNetCore.WebUtilities;
+@using System.Runtime.InteropServices.ComTypes
 <PageTitle>TestBlazorServer</PageTitle>
 
 <div class="page">
@@ -16,11 +17,15 @@
 		{ 
 		}
 		else
-		{
-			
+		{  
 			<article class="content px-4">
 				@Body
 			</article>
 		}
 	</main>
 </div>
+
+@code
+{
+	DateTimeOffset d = DateTime.Now;
+}

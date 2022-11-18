@@ -1,5 +1,5 @@
 ﻿@using Index = LibPages.Areas.MyFeature.Pages.Index
-<BeSwarmEnvironment platform=@Platforms.Maui>
+<BeSwarmEnvironment >
 	<Router AppAssembly="@typeof(Main).Assembly" AdditionalAssemblies="new[] { typeof(BeSwarm.CoreBlazorApp.Pages.Login).Assembly,typeof(Index).Assembly}">
 	<Found Context="routeData">
 		<RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />

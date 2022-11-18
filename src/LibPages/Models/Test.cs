@@ -21,7 +21,7 @@ namespace LibPages.Models
 
 		public Test()
 		{
-
+			Date = DateTimeOffset.Now;
 		}
 
 	}

@@ -1,4 +1,6 @@
 ﻿using BeSwarm.CoreBlazorApp.Services;
+
+using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 
 using System;
@@ -12,18 +14,18 @@ namespace TestMauiBlazor
 	public class SessionPersistenceMaui : ISessionPersistence
 	{
 		
+
 		public SessionPersistenceMaui()
 		{
-			
 		}
 		public async Task Save(string key, string value)
 		{
-			
+			await SecureStorage.Default.SetAsync(key, value);
 		}
 
 		public async Task<string> Get(string key)
 		{
-			return "";
+			return await SecureStorage.Default.GetAsync(key);
 
 		}
 	}

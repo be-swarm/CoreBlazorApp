@@ -5,28 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
  
   <ItemGroup>
+    <AdditionalFiles Include="**/*.resx" />
+    <PackageReference Include="beswarm.ResxSourceGenerator" Version="1.0.0" />
+
     <ProjectReference Include="..\CoreBlazorApp\CoreBlazorApp.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\App.Designer.cs">
-      <DependentUpon>App.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\App.resx">
-      <LastGenOutput>App.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
 
 
 </Project>

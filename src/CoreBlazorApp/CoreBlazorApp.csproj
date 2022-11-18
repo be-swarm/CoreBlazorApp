@@ -7,7 +7,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>BeSwarm.CoreBlazorApp</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.0.0-rc1.85</Version>
+    <Version>1.0.1</Version>
     <PackageId>BeSwarm.CoreBlazorApp</PackageId>
     <Title>CoreBlazorApp</Title>
     <PackageTags>Blazor,BeSwarm,WebApi</PackageTags>
@@ -31,7 +31,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeSwarm.Validator" Version="1.0.0-rc1" />
+    <PackageReference Include="BeSwarm.Validator" Version="1.0.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
     <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
@@ -59,7 +59,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BeSwarmWebApiClient\src\BeSwarmWebApiClient\beswarmwebapiclient.csproj" />
+    <ProjectReference Include="..\BeSwarmWebApiClient\beswarmwebapiclient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\coreblazorapp.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Components.WebView.Maui;
 
 using System.Globalization;
 */
-using BeSwarm.WebApiClient;
+using BeSwarm.WebApi;
 
 
 namespace TestMauiBlazor
@@ -41,6 +41,8 @@ namespace TestMauiBlazor
 			builder.Services.AddLocalization(option => option.ResourcesPath = "Resources");
 			builder.Services.AddMauiBlazorWebView();
 			builder.Services.AddSingleton<ISecureConfig, SecureConfig>();
+			builder.Services.AddScoped<ICryptoService, CryptoFromNativeNetCore>();
+
 
 #if DEBUG
 			builder.Services.AddBlazorWebViewDeveloperTools();

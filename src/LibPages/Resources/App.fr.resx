@@ -126,4 +126,22 @@
   <data name="Weight" xml:space="preserve">
     <value>Poids</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Taille</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="PromptDialog" xml:space="preserve">
+    <value>Afficher une dialog</value>
+  </data>
+  <data name="PromptError" xml:space="preserve">
+    <value>Afficher une erreur</value>
+  </data>
 </root>

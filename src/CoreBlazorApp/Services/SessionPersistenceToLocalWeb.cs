@@ -13,20 +13,20 @@ namespace BeSwarm.CoreBlazorApp.Services;
 
 public class SessionPersistenceToLocalWeb : ISessionPersistence
 {
-	private readonly ILocalStorageService LocalStorageService = default!;
+	private readonly ILocalStorageService _localStorageService = default!;
 
 	public SessionPersistenceToLocalWeb(ILocalStorageService _localService)
 	{
-		LocalStorageService = _localService;
+		_localStorageService = _localService;
 	}
 	public async Task Save(string key, string value)
 	{
-		await LocalStorageService.SetItemAsStringAsync(key, value);
+		await _localStorageService.SetItemAsStringAsync(key, value);
 	}
 
 	public async Task<string> Get(string key)
 	{
-		return await LocalStorageService.GetItemAsStringAsync(key);
+		return await _localStorageService.GetItemAsStringAsync(key);
 
 	}
 }

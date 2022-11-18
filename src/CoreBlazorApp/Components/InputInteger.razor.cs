@@ -35,7 +35,7 @@ public partial class InputInteger
 	[Parameter] public int Max { get; set; } = int.MaxValue;
 	[Parameter] public bool ValidateStrict { get; set; }
 	[Parameter] public bool ReadOnly { get; set; }
-
+	[Parameter] public int Step { get; set; } = 1;
 	protected override void OnInitialized()
 	{
 		// adjust MaxLength

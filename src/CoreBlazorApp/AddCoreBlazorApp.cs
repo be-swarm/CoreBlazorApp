@@ -1,5 +1,5 @@
 ﻿using BeSwarm.CoreBlazorApp.Services;
-using BeSwarm.WebApiClient;
+using BeSwarm.WebApi;
 
 using Blazored.SessionStorage;
 using Blazored.LocalStorage;

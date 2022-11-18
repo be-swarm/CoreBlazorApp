@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace BeSwarm.CoreBlazorApp.Components;
 
-public partial class InputSliderDecimal
+public partial class InputSliderDecimal : IDisposable
 {
 	private Decimal _value;
 	[Parameter]
@@ -52,6 +52,26 @@ public partial class InputSliderDecimal
 
 		}
 
+	}
+	protected override async Task OnAfterRenderAsync(bool FirstTime)
+	{
+		if (FirstTime)
+		{
+			Session.EnvironmentHasChanged += async (ChangeEvents e) => await OnRefresh(e);
+			await OnRefresh(ChangeEvents.Lang);
+		}
+	}
+	private async Task OnRefresh(ChangeEvents e)
+	{
+		if (e == ChangeEvents.Login || e == ChangeEvents.Lang || e == ChangeEvents.Init)
+		{
+			StateHasChanged();
+		}
+
+	}
+	void IDisposable.Dispose()
+	{
+		Session.EnvironmentHasChanged -= async (ChangeEvents e) => await OnRefresh(e);
 	}
 }
 

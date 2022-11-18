@@ -1,4 +1,4 @@
-﻿using BeSwarm.WebApiClient.Models;
+﻿using BeSwarm.WebApi.Models;
 
 using Microsoft.AspNetCore.Components;
 

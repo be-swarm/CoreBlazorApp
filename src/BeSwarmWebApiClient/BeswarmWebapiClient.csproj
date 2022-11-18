@@ -1,0 +1,146 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Description>BeSwarm WebApi c# client</Description>
+    <Copyright>BeSwarm</Copyright>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>BeSwarm.WebApi</RootNamespace>
+
+    <Version>1.0.1</Version>
+    <PackageId>BeSwarm.WebApiClient</PackageId>
+
+    <Title>BeSwarm web api wrapper classes and pocos</Title>
+    <PackageTags>BeSwarm,WebApi</PackageTags>
+
+    <Description>  </Description>
+    <RepositoryUrl>https://github.com/be-swarm/BeSwarmWebApiClient</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/be-swarm/BeSwarmWebApiClient</PackageProjectUrl>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+
+    <Authors>Be Swarm</Authors>
+    <Company>Be Swarm</Company>
+    <Copyright>Be Swarm</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <RepositoryType>git</RepositoryType>
+
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.23.1" />
+    <PackageReference Include="Microsoft.JSInterop" Version="6.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.13.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.MSBuild" Version="13.13.2">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="swaggergen\src\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <!--<Target Name="NSwag" BeforeTargets="BeforeBuild" Condition="'$(TF_BUILD)'!='True'">
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/core.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/access.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/referentials.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/application.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/usertimeseries.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userplanner.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userbank.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userhealthdrug.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userdocument.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userfoodoffer.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userfoodorder.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/usershopping.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net50) run ./swaggergen/userlocation.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+    <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+    <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
+  </Target>-->
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
