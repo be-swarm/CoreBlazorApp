@@ -6,7 +6,7 @@
     <Copyright>BeSwarm</Copyright>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>BeSwarm.WebApi</RootNamespace>
-
+ 
     <Version>1.0.1</Version>
     <PackageId>BeSwarm.WebApiClient</PackageId>
 
